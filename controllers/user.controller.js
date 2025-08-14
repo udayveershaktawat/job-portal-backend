@@ -139,3 +139,68 @@ exports.login = async(req,res)=>{
         
     }
  }
+
+//  update profile
+exports.updateProfile = async(req,res)=>{
+    try{
+        const {fullname,email,phoneNumber,bio,skills}= req.body;
+        const file = req.file;
+
+        if(!fullname || !email || !phoneNumber || !bio || skills){
+            return res.status(400).json({
+                message:"all fields are required",
+                success:false
+            })
+        }
+
+        const skillsArray = skills.split(",");
+        const userId = req.id;
+        let user = await User.findById(userId);
+
+        if(!user){
+            return res.status(400).json({
+                success:false,
+                message:"user not found"
+            })
+        }
+
+
+        // updating data
+        user.fullname = fullname,
+        user.email=email,
+        user.phoneNumber=phoneNumber,
+        user.profile.bio=bio,
+        user.profile.skillsArray
+
+
+
+        await user.save();
+
+
+        user = {
+            _id:user._id,
+            fullname:user.fullname,
+            email:user.email,
+            phoneNumber:user.phoneNumber,
+            role:user.role,
+            profile:user.profile
+        }
+
+
+        return res.status(200).json({
+            success:true,
+            message:"profile updated successfully",
+            user,
+        })
+
+         
+    } catch(error){
+        console.log(error)
+        return res.status(500).json({
+            success:false,
+            message:"error while logout",
+            error:error.message
+        })
+
+    }
+}
