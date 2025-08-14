@@ -1,5 +1,6 @@
 const User = require("../models/user.model");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 
 
@@ -43,4 +44,65 @@ exports.register = async(req,res)=>{
 
     }
 
+}
+
+// login
+
+exports.login = async(req,res)=>{
+    try{
+        const {email,password,role} = req.body;
+        if(!email || !password || !role){
+            return res.status(400).json({
+                success:false,
+                message:"please enter all the details"
+            })
+        }
+
+        const user = await User.findOne({email});
+        if(!user){
+            return res.status(400).json({
+                success:false,
+                message:"incorrect email or password"
+            })
+        }
+        const isPassword = await bcrypt.compare(password,user.password);
+        if(!isPassword){
+            return res.status(400).json({
+                success:false,
+                message:"incorrect email or password"
+            })
+        }
+        // check role
+        if(role !== user.role){
+            return res.status({
+                success:false,
+                message:"account does not exist with current role"
+            })
+        }
+
+        const tokenDate = {
+            userId:user._id
+        }
+
+        const token = await jwt.sign(tokenDate,process.env.SECRET_KEY,{expiresIn:"24h "});
+
+
+        return res.status(200).cookie("token",token,{maxAge:1*24*60*60*1000, httpOnly:true,sameSite:"strict"}).json({
+            success:true,
+            message:"login successfully"
+        })
+
+
+
+
+    }
+    catch(error){
+        console.log(error)
+        return res.status(500).json({
+            success:false,
+            message:"unable to create registration",
+            error:error.message
+        })
+
+    }
 }
