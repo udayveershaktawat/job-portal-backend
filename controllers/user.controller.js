@@ -58,7 +58,7 @@ exports.login = async(req,res)=>{
             })
         }
 
-        const user = await User.findOne({email});
+        let user = await User.findOne({email});
         if(!user){
             return res.status(400).json({
                 success:false,
@@ -85,6 +85,11 @@ exports.login = async(req,res)=>{
         }
 
         const token = await jwt.sign(tokenDate,process.env.SECRET_KEY,{expiresIn:"24h "});
+
+        user = {
+            _id:user._id,
+            
+        }
 
 
         return res.status(200).cookie("token",token,{maxAge:1*24*60*60*1000, httpOnly:true,sameSite:"strict"}).json({
