@@ -114,10 +114,28 @@ exports.login = async(req,res)=>{
         console.log(error)
         return res.status(500).json({
             success:false,
-            message:"unable to create registration",
+            message:"error while login",
             error:error.message
         })
 
     }
 }
 // logout
+ exports.logout = async(req,res)=>{
+    try{
+        return res.status(200).cookie("token","",{maxAge:0}).json({
+            success:true,
+            message:"logged out successfully"
+        })
+
+    }
+    catch(error){
+        console.log(error)
+        return res.status(500).json({
+            success:false,
+            message:"error while logout",
+            error:error.message
+        })
+        
+    }
+ }
