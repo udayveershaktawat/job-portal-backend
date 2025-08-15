@@ -170,7 +170,7 @@ exports.updateProfile = async(req,res)=>{
         user.email=email,
         user.phoneNumber=phoneNumber,
         user.profile.bio=bio,
-        user.profile.skillsArray
+        user.profile.skillsArray = skillsArray
 
 
 
@@ -199,7 +199,7 @@ exports.updateProfile = async(req,res)=>{
         return res.status(500).json({
             success:false,
             message:"error while logout",
-            error:error.message
+            error:error.message  
         })
 
     }
