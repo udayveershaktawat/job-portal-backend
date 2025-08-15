@@ -13,6 +13,7 @@ const {register , login,logout,updateProfile} = require("../controllers/user.con
 router.post("/register",register);
 router.post("/login",login);
 router.post("/profile/update",updateProfile);
+router.get("/logout",logout);
 
 
 module.exports = router;
