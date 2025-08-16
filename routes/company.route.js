@@ -1,23 +1,26 @@
+
+
+
+
+
+
 const express = require("express");
 const router = express.Router();
 
 
 
 
-
-
-
-
-
-const {registerCompany ,getCompany,getCompanyById,updateCompany} = require("../controllers/company.controller");
-
-
-
+// import controller
+const {registerCompany , getCompany,getCompanyById,updateCompany} = require("../controllers/user.controller");
+const isAuthenticated = require("../middlewares/isAuthenticated")
 
 
 
 // routes
-router.post("/register",register);
-router.post("/get",login);
-router.post("/update/:id",update);
-router.get("/get/:id",getCompanyById);
+router.post("/register",isAuthenticated,registerCompany);
+router.get("/get", isAuthenticated,getCompany);
+router.get("/get/:id",isAuthenticated,getCompanyById);
+router.post("/update/:id", isAuthenticated,updateCompany);
+
+
+module.exports = router;
