@@ -35,3 +35,21 @@ exports.registerCompany = async(req,res)=>{
         console.log(error)
     }
 }
+
+// get Company
+exports.getCompany = async(req,res)=>{
+    try{
+        const userId = req.id;
+        const companies = await Company.find({userId});
+        if(!companies){
+            return res.status(404).json({
+                success:false,
+                message:"company not found"
+            })
+        }
+
+    }
+    catch(error){
+        console.log(error)
+    }
+}
