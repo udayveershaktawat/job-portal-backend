@@ -37,3 +37,35 @@ exports.postJob = async(req,res)=>{
         console.log(error)
     }
 }
+
+// get alll job
+exports.getAllJobs = async(req,res)=>{
+    try{
+        const keyword = req.query.keyword || "";
+        const query = {
+            $or:[
+                {title:{$regex:keyword,$options:"i"}},
+                {description:{$regex:keyword,$options:"i"}}
+            ]
+        }
+
+        const jobs = await Job.find(query);
+        if(!jobs){
+            return res.status(404).json({
+                success:false,
+                message:"jobs not found"
+            })
+        }
+
+        return res.status(200).json({
+            success:true,
+            jobs,
+            message:"jobs fetched successfully"
+        })
+
+
+    }
+    catch(error){
+        console.log(error)
+    }
+}
