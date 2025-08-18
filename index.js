@@ -3,7 +3,8 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const connectWithDb = require("./config/database");
 const userRoute = require("./routes/user.route");
-const companyRoute =require("./routes/company.route")
+const companyRoute =require("./routes/company.route");
+const jobRoute = require("./routes/job.route")
 
 const app = express();
 
@@ -25,6 +26,7 @@ connectWithDb();
 // api
 app.use("/api/v1/user",userRoute);
 app.use("/api/v1/company",companyRoute);
+app.use("/api/v1/job",jobRoute)
 
 app.listen(process.env.PORT,()=>{
     console.log(`server started at port number ${PORT}`)
