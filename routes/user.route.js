@@ -3,17 +3,17 @@ const router = express.Router();
 
 
 
-
+const isAuthenticated = require("../middlewares/isAuthenticated");
 // import controller
-const {register , login,logout,updateProfile} = require("../controllers/user.controller");
-const isAuthenticated = require("../middlewares/isAuthenticated")
+const {register,login,logout,updateProfile} = require("../controllers/user.controller");
+
 
 
 
 // routes
 router.post("/register",register);
 router.post("/login",login);
-router.post("/profile/update",isAuthenticated,updateProfile);
+router.put("/profile/update",isAuthenticated,updateProfile);
 router.get("/logout",logout);
 
 

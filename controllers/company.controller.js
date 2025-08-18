@@ -11,7 +11,7 @@ exports.registerCompany = async(req,res)=>{
             })
         }
 
-        let comapny = await Company.findOne({name:companyName})
+        let company = await Company.findOne({name:companyName})
 
         if(company){
             return res.status(400).json({

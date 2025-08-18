@@ -9,18 +9,18 @@ const router = express.Router();
 
 
 
-
-// import controller
-const {registerCompany , getCompany,getCompanyById,updateCompany} = require("../controllers/user.controller");
 const isAuthenticated = require("../middlewares/isAuthenticated")
+// import controller
+const {registerCompany,getCompany,getCompanyById,updateCompany} = require("../controllers/company.controller");
+
 
 
 
 // routes
-router.post("/register",isAuthenticated,registerCompany);
-router.get("/get", isAuthenticated,getCompany);
-router.get("/get/:id",isAuthenticated,getCompanyById);
-router.post("/update/:id", isAuthenticated,updateCompany);
+router.post("/registercompany",isAuthenticated,registerCompany);
+router.get("/getcompany",isAuthenticated,getCompany);
+router.get("/getcompany/:id",isAuthenticated,getCompanyById);
+router.put("/updatecompany/:id", isAuthenticated,updateCompany);
 
 
 module.exports = router;

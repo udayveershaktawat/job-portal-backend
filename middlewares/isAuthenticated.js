@@ -2,8 +2,7 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 
-
-exports.isAuthenticated = async(req,res,next)=>{
+const isAuthenticated = async(req,res,next)=>{
     try{
         const token = req.cookies.token;
         if(!token){
@@ -23,3 +22,6 @@ exports.isAuthenticated = async(req,res,next)=>{
 
     }
 }
+
+
+module.exports = isAuthenticated
