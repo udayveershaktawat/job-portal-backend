@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
 
-const isAuthentication = require("../middlewares/isAuthenticated");
+const isAuthenticated = require("../middlewares/isAuthenticated");
 
 
 // import controller
 
-const {}
+const {postJob,getAlljobs,getAdminJobs,getJobsId} = require("../controllers/job.controller")
 
 
 
@@ -17,7 +17,11 @@ const {}
 
 
 
-router.post("/post",isAuthentication,postJob);
-router.get("/get",isAuthentication,getAlljobs);
-router.get("/getadminjobs",isAuthentication,getAdminJobs);
-router.get("/get/:id",isAuthentication,getJobsId)
+router.post("/post",isAuthenticated,postJob);
+router.get("/get",isAuthenticated,getAlljobs);
+router.get("/getadminjobs",isAuthenticated,getAdminJobs);
+router.get("/get/:id",isAuthenticated,getJobsId)
+
+
+
+module.exports  = router;
