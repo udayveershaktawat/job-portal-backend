@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
 
-const isAuthenticated = require("../middlewares/isAuthenticated");
+const {isAuthenticated} = require("../middlewares/isAuthenticated");
 
 
 // import controller
 
-const {postJob,getAllJobs,getAdminJobs,getJobsById} = require("../controllers/job.controller")
+const {postJob,getAllJobs,getAdminJobs,getJobsById} = require("../controllers/job.controller");
 
 
 
