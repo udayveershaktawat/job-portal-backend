@@ -6,7 +6,7 @@ const isAuthenticated = require("../middlewares/isAuthenticated");
 
 // import controller
 
-const {postJob,getAlljobs,getAdminJobs,getJobsId} = require("../controllers/job.controller")
+const {postJob,getAllJobs,getAdminJobs,getJobsById} = require("../controllers/job.controller")
 
 
 
@@ -18,9 +18,9 @@ const {postJob,getAlljobs,getAdminJobs,getJobsId} = require("../controllers/job.
 
 
 router.post("/post",isAuthenticated,postJob);
-router.get("/get",isAuthenticated,getAlljobs);
+router.get("/get",isAuthenticated,getAllJobs);
 router.get("/getadminjobs",isAuthenticated,getAdminJobs);
-router.get("/get/:id",isAuthenticated,getJobsId)
+router.get("/get/:id",isAuthenticated,getJobsById)
 
 
 
