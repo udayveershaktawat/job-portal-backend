@@ -53,3 +53,36 @@ exports.applyJob = async(req,res)=>{
 
     }
 }
+
+// get applied job
+exports.getAppliedJobs = async(req,res)=>{
+    try{
+        const userId = req.id;
+        const application = await Application.findOne({
+            applicant:userId
+        }).sort({createdAt:-1}).populate({
+            path:"job",
+            options:{sort:{createdAt:-1}},
+            populate:{
+                path:"company",
+                options:{sort:{createdAt:-1}},
+            }
+        });
+        if(!application){
+            return res.status(404).json({
+                message:"no application",
+                success:false
+            })
+        };
+
+        return res.status(200).json({
+            success:true,
+            message:"successfully fetched",
+            application
+        })
+
+    }
+    catch(error){
+        console.log(error)
+    }
+}
