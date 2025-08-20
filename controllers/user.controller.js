@@ -1,6 +1,8 @@
 const User = require("../models/user.model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const fileDataUri = require("../utils/datauri");
+const cloudinary = require("cloudinary");
 
 
 
@@ -145,6 +147,8 @@ exports.updateProfile = async(req,res)=>{
     try{
         const {fullname,email,phoneNumber,bio,skills}= req.body;
         const file = req.file;
+        const fileUri = getDataUri(file);
+        const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
 
         if(!fullname || !email || !phoneNumber || !bio || skills){
             return res.status(400).json({
@@ -171,6 +175,14 @@ exports.updateProfile = async(req,res)=>{
         user.phoneNumber=phoneNumber,
         user.profile.bio=bio,
         user.profile.skillsArray = skillsArray
+
+
+
+
+        if(cloudResponse){
+            user.profile.resume = cloudResponse.secure.url,
+            user.profile.resumeOriginalName = file.originalname
+        }
 
 
 
