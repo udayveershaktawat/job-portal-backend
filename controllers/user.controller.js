@@ -147,19 +147,25 @@ exports.updateProfile = async(req,res)=>{
     try{
         const {fullname,email,phoneNumber,bio,skills}= req.body;
         const file = req.file;
-        const fileUri = getDataUri(file);
-        const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+        // const fileUri = getDataUri(file);
+        // const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
 
-        if(!fullname || !email || !phoneNumber || !bio || skills){
-            return res.status(400).json({
-                message:"all fields are required",
-                success:false
-            })
-        }
+        // if(!fullname || !email || !phoneNumber || !bio || skills){
+        //     return res.status(400).json({
+        //         message:"all fields are required",
+        //         success:false
+        //     })
+        // }
+
+        let skillsArray;
+        if(skills){
 
         const skillsArray = skills.split(",");
+
+        }
         const userId = req.id;
         let user = await User.findById(userId);
+
 
         if(!user){
             return res.status(400).json({
@@ -169,20 +175,28 @@ exports.updateProfile = async(req,res)=>{
         }
 
 
+        // // updating data
+        // user.fullname = fullname,
+        // user.email=email,
+        // user.phoneNumber=phoneNumber,
+        // user.profile.bio=bio,
+        // user.profile.skillsArray = skillsArray
+
+
         // updating data
-        user.fullname = fullname,
-        user.email=email,
-        user.phoneNumber=phoneNumber,
-        user.profile.bio=bio,
-        user.profile.skillsArray = skillsArray
+        if(fullname) user.fullname = fullname
+        if(email) user.email = email
+        if(phoneNumber) user.phoneNumber = phoneNumber
+        if(bio) user.profile.bio = bio
+        if(skills) user.profile.skills = skillsArray
 
 
 
 
-        if(cloudResponse){
-            user.profile.resume = cloudResponse.secure.url,
-            user.profile.resumeOriginalName = file.originalname
-        }
+        // if(cloudResponse){
+        //     user.profile.resume = cloudResponse.secure.url,
+        //     user.profile.resumeOriginalName = file.originalname
+        // }
 
 
 
