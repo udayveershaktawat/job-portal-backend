@@ -90,7 +90,7 @@ exports.login = async(req,res)=>{
             userId:user._id
         }
 
-        const token = await jwt.sign(tokenDate,process.env.SECRET_KEY,{expiresIn:"24h "});
+        const token = await jwt.sign(tokenDate,process.env.SECRET_KEY,{expiresIn:"24h"});
 
         user = {
             _id:user._id,
@@ -216,3 +216,4 @@ exports.updateProfile = async(req,res)=>{
 
     }
 }
+
