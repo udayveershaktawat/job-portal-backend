@@ -147,15 +147,15 @@ exports.updateProfile = async(req,res)=>{
     try{
         const {fullname,email,phoneNumber,bio,skills}= req.body;
         const file = req.file;
-        // const fileUri = getDataUri(file);
-        // const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+        const fileUri = getDataUri(file);
+        const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
 
-        // if(!fullname || !email || !phoneNumber || !bio || skills){
-        //     return res.status(400).json({
-        //         message:"all fields are required",
-        //         success:false
-        //     })
-        // }
+        if(!fullname || !email || !phoneNumber || !bio || skills){
+            return res.status(400).json({
+                message:"all fields are required",
+                success:false
+            })
+        }
 
         let skillsArray;
         if(skills){
